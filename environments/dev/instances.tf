@@ -12,7 +12,7 @@ module "primary_server" {
   ami_id             = var.ami_id
   key_name           = var.key_name
   security_group_ids = [module.security_group.security_group_id]
-  user_data          = templatefile("${path.module}/user-data-primary.sh", {
+  user_data = templatefile("${path.module}/user-data-primary.sh", {
     environment = var.environment
   })
 

@@ -48,5 +48,5 @@ output "environment" {
 
 output "total_instances" {
   description = "Total number of instances deployed"
-  value       = 1  # Solo servidor primario por ahora
+  value       = 1 # Solo servidor primario por ahora
 }
