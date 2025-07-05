@@ -76,24 +76,57 @@ resource "aws_instance" "demo" {
               systemctl start httpd
               systemctl enable httpd
               
-              cat > /var/www/html/index.html << 'HTML'
+              # Obtener datos de metadatos
+              INSTANCE_ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)
+              INSTANCE_TYPE=$(curl -s http://169.254.169.254/latest/meta-data/instance-type)
+              REGION=$(curl -s http://169.254.169.254/latest/meta-data/placement/region)
+              AZ=$(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone)
+              
+              # Crear página HTML con los datos obtenidos
+              cat > /var/www/html/index.html << HTML
               <!DOCTYPE html>
               <html>
               <head>
                   <title>Terraform PoC</title>
                   <style>
-                      body { font-family: Arial; margin: 40px; background: #f5f5f5; }
-                      .container { background: white; padding: 20px; border-radius: 8px; }
+                      body { 
+                          font-family: Arial, sans-serif; 
+                          margin: 40px; 
+                          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                          color: white;
+                      }
+                      .container { 
+                          background: rgba(255,255,255,0.1); 
+                          padding: 30px; 
+                          border-radius: 15px; 
+                          backdrop-filter: blur(10px);
+                          max-width: 600px;
+                          margin: 0 auto;
+                      }
+                      .info-item {
+                          background: rgba(255,255,255,0.1);
+                          padding: 10px;
+                          margin: 10px 0;
+                          border-radius: 5px;
+                      }
+                      .success { color: #4CAF50; font-weight: bold; }
                   </style>
               </head>
               <body>
                   <div class="container">
-                      <h1>🚀 Terraform PoC - ${var.environment}</h1>
-                      <p><strong>Instance ID:</strong> $(curl -s http://169.254.169.254/latest/meta-data/instance-id)</p>
-                      <p><strong>Instance Type:</strong> $(curl -s http://169.254.169.254/latest/meta-data/instance-type)</p>
-                      <p><strong>Region:</strong> $(curl -s http://169.254.169.254/latest/meta-data/placement/region)</p>
-                      <hr>
-                      <small>Infraestructura como Código con Terraform</small>
+                      <h1>🚀 Terraform PoC Exitosa</h1>
+                      <div class="success">✅ Infraestructura desplegada correctamente</div>
+                      
+                      <h3>📊 Información de la Instancia:</h3>
+                      <div class="info-item"><strong>Instance ID:</strong> $INSTANCE_ID</div>
+                      <div class="info-item"><strong>Instance Type:</strong> $INSTANCE_TYPE</div>
+                      <div class="info-item"><strong>Región:</strong> $REGION</div>
+                      <div class="info-item"><strong>Zona de Disponibilidad:</strong> $AZ</div>
+                      <div class="info-item"><strong>Entorno:</strong> ${var.environment}</div>
+                      
+                      <hr style="margin: 20px 0; border: 1px solid rgba(255,255,255,0.3);">
+                      <p>🎯 <strong>Terraform PoC</strong> - Infrastructure as Code</p>
+                      <small>Desplegado automáticamente con Terraform + GitHub Actions</small>
                   </div>
               </body>
               </html>
