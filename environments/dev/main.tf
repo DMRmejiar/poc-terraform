@@ -26,6 +26,7 @@ locals {
     Project     = "terraform-poc"
     CreatedBy   = "terraform"
     Repository  = "poc-terraform"
+    Version     = "v1.0"
   }
 }
 
