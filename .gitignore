@@ -1,0 +1,44 @@
+# Terraform files
+*.tfstate
+*.tfstate.*
+*.tfvars.backup
+.terraform/
+.terraform.lock.hcl
+crash.log
+crash.*.log
+*.tfplan
+
+# Environment specific tfvars - NEVER commit these to public repos
+terraform.tfvars
+*.tfvars
+!terraform.tfvars.example
+
+# AWS credentials and sensitive files
+.aws/
+*.pem
+*.ppk
+credentials
+config
+
+# System files
+*.log
+*.bak
+*.tmp
+*.swp
+.DS_Store
+Thumbs.db
+
+# IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# Local environment files
+.env
+.env.local
+.env.production
+.env.development
+
+# Sensitive outputs
+outputs.json
+terraform-outputs.json
