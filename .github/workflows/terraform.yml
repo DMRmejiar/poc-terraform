@@ -39,7 +39,19 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Cache Terraform State
+        uses: actions/cache@v3
+        with:
+          path: |
+            environments/dev/.terraform
+            environments/dev/terraform.tfstate
+            environments/dev/terraform.tfstate.backup
+          key: terraform-state-${{ hashFiles('environments/dev/**/*.tf') }}
+          restore-keys: |
+            terraform-state-
+
       - name: Setup terraform.tfvars
+        working-directory: environments/dev
         run: |
           if [ ! -f "terraform.tfvars" ]; then
             echo "Usando terraform.tfvars.example como base"
@@ -47,17 +59,32 @@ jobs:
           fi
 
       - name: Terraform Init
+        working-directory: environments/dev
         run: terraform init
 
       - name: Terraform Validate
+        working-directory: environments/dev
         run: terraform validate
 
       - name: Terraform Format Check
+        working-directory: environments/dev
         run: terraform fmt -check
 
       - name: Terraform Plan
+        working-directory: environments/dev
         run: terraform plan -input=false
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        working-directory: environments/dev
         run: terraform apply -auto-approve -input=false
+
+      - name: Cache Terraform State (Post-Apply)
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        uses: actions/cache/save@v3
+        with:
+          path: |
+            environments/dev/.terraform
+            environments/dev/terraform.tfstate
+            environments/dev/terraform.tfstate.backup
+          key: terraform-state-${{ github.sha }}

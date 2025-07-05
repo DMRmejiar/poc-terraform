@@ -48,6 +48,17 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
 
+      - name: Restore Terraform State
+        uses: actions/cache/restore@v3
+        with:
+          path: |
+            environments/dev/.terraform
+            environments/dev/terraform.tfstate
+            environments/dev/terraform.tfstate.backup
+          key: terraform-state-
+          restore-keys: |
+            terraform-state-
+
       - name: Setup terraform.tfvars
         working-directory: environments/dev
         run: |

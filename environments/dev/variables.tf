@@ -27,3 +27,9 @@ variable "environment" {
   type        = string
   default     = "dev"
 }
+
+variable "deploy_secondary_server" {
+  description = "Whether to deploy the secondary server"
+  type        = bool
+  default     = true
+}
