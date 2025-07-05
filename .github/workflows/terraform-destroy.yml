@@ -1,0 +1,74 @@
+name: Terraform Destroy
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Escribir "destroy" para confirmar'
+        required: true
+        default: ''
+
+env:
+  TF_VERSION: "1.8.0"
+  AWS_REGION: "us-east-1"
+
+jobs:
+  destroy:
+    name: Terraform Destroy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate confirmation
+        run: |
+          if [ "${{ github.event.inputs.confirm }}" != "destroy" ]; then
+            echo "❌ Debes escribir 'destroy' para confirmar"
+            exit 1
+          fi
+          echo "✅ Confirmación recibida"
+
+      - name: Verify workspace structure
+        run: |
+          echo "📁 Estructura del workspace:"
+          ls -la
+          echo "📁 Verificando directorio environments/dev:"
+          ls -la environments/dev/ || echo "❌ Directorio no encontrado"
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ env.TF_VERSION }}
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup terraform.tfvars
+        working-directory: environments/dev
+        run: |
+          if [ ! -f "terraform.tfvars" ]; then
+            echo "Usando terraform.tfvars.example como base"
+            cp terraform.tfvars.example terraform.tfvars
+          fi
+
+      - name: Terraform Init
+        working-directory: environments/dev
+        run: terraform init
+
+      - name: Terraform Plan Destroy
+        working-directory: environments/dev
+        run: terraform plan -destroy -input=false
+
+      - name: Terraform Destroy
+        working-directory: environments/dev
+        run: terraform destroy -auto-approve -input=false
+
+      - name: Verify Destruction
+        run: |
+          echo "🗑️ Verificando que los recursos fueron eliminados..."
+          aws ec2 describe-instances --filters "Name=tag:Name,Values=terraform-poc-instance-dev" --query "Reservations[].Instances[?State.Name!='terminated'].{InstanceId:InstanceId,State:State.Name}" --output table || echo "✅ No hay instancias activas"

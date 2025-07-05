@@ -45,6 +45,10 @@ Para deploy automático con GitHub Actions:
    - `AWS_SECRET_ACCESS_KEY`
 2. **Push to main** → Deploy automático
 
+### Eliminar recursos desde GitHub:
+1. **Actions** → **Terraform Destroy**
+2. **Run workflow** → Escribir `destroy` → **Run**
+
 ## 📁 Estructura
 
 ```
