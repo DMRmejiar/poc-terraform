@@ -33,7 +33,7 @@ terraform destroy      # Escribir 'yes'
 ## 🏗️ Qué despliega
 
 - **2 EC2 Instances**: t2.micro + Amazon Linux 2 (primary y secondary)
-- **Security Group**: SSH (22) + HTTP (80) 
+- **Security Group**: HTTP (80) 
 - **Web Servers**: Apache con páginas demo personalizadas
 - **Módulos**: Componentes reutilizables para web-server y security-group
 

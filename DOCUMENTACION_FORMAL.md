@@ -3,9 +3,7 @@
 
 ## 1. Descripción de la Prueba
 
-Esta prueba de concepto demuestra la implementación de **Infrastructure as Code (IaC)** utilizando Terraform para automatizar el despliegue de infraestructura en Amazon Web Services (AWS). El proyecto consiste en el despliegue automatizado de servidores web con Apache en instancias EC2, incluyendo la configuración de grupos de seguridad, redes y automatización CI/CD.
-
-La PoC está diseñada para demostrar los fundamentos de IaC manteniendo las mejores prácticas de seguridad y organización de código, proporcionando un framework escalable y reutilizable.
+Esta prueba de concepto implementa Infrastructure as Code (IaC) utilizando Terraform para automatizar el despliegue de servidores web Apache en instancias EC2 de AWS, incluyendo configuración de grupos de seguridad y pipeline CI/CD con GitHub Actions, demostrando un framework escalable y reutilizable mediante módulos.
 
 ## 2. Objetivo(s) de la Prueba
 
@@ -28,7 +26,7 @@ Demostrar la viabilidad y efectividad de Terraform para automatizar el despliegu
    - Configuración de providers AWS y versiones de Terraform
 
 2. **Desarrollo de módulos**
-   - Módulo Security Group con reglas HTTP (80) y SSH (22)
+   - Módulo Security Group con reglas HTTP (80)
    - Módulo Web Server con instancias EC2 y configuración Apache
 
 3. **Despliegue de infraestructura**
@@ -53,7 +51,7 @@ Demostrar la viabilidad y efectividad de Terraform para automatizar el despliegu
 
 ### Infraestructura Desplegada
 - **2 instancias EC2** (t2.micro) con Apache configurado automáticamente
-- **1 Security Group** con reglas HTTP (80) y SSH (22)
+- **1 Security Group** con reglas HTTP (80)
 - **Páginas web funcionales** accesibles públicamente
 
 ### Automatización Implementada
