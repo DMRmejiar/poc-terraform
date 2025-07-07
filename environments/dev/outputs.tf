@@ -19,20 +19,20 @@ output "primary_web_url" {
 }
 
 # Secondary Server Outputs (agregado en commit 2)
-# output "secondary_instance_id" {
-#   description = "ID of the secondary EC2 instance"
-#   value       = module.secondary_server.instance_id
-# }
+output "secondary_instance_id" {
+  description = "ID of the secondary EC2 instance"
+  value       = module.secondary_server.instance_id
+}
 
-# output "secondary_instance_public_ip" {
-#   description = "Public IP address of the secondary EC2 instance"
-#   value       = module.secondary_server.instance_public_ip
-# }
+output "secondary_instance_public_ip" {
+  description = "Public IP address of the secondary EC2 instance"
+  value       = module.secondary_server.instance_public_ip
+}
 
-# output "secondary_web_url" {
-#   description = "URL to access the secondary web server"
-#   value       = module.secondary_server.web_url
-# }
+output "secondary_web_url" {
+  description = "URL to access the secondary web server"
+  value       = module.secondary_server.web_url
+}
 
 # Security Group Outputs
 output "security_group_id" {
