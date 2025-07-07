@@ -14,7 +14,7 @@ locals {
     Project     = "terraform-poc"
     CreatedBy   = "terraform"
     Repository  = "poc-terraform"
-    Version     = "v1.0" # Commit 1: Deploy inicial
+    Version     = "v1.0"
   }
 }
 
