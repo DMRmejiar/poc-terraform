@@ -1,6 +1,6 @@
 # Terraform PoC AWS
 
-📚 **Proyecto educativo** que demuestra Infrastructure as Code (IaC) con Terraform y AWS.  
+� **Prueba de Concepto** que demuestra Infrastructure as Code (IaC) con Terraform y AWS.  
 🔒 **Repositorio público** - Sin datos sensibles.
 
 ## ⚡ Inicio Rápido
@@ -23,7 +23,8 @@ terraform init
 terraform apply       # Escribir 'yes'
 
 # Ver resultado
-terraform output web_url
+terraform output primary_web_url
+terraform output secondary_web_url
 
 # Limpiar
 terraform destroy      # Escribir 'yes'
@@ -31,11 +32,10 @@ terraform destroy      # Escribir 'yes'
 
 ## 🏗️ Qué despliega
 
-- **EC2 Instance**: t2.micro + Amazon Linux 2
+- **2 EC2 Instances**: t2.micro + Amazon Linux 2 (primary y secondary)
 - **Security Group**: SSH (22) + HTTP (80) 
-- **Web Server**: Apache con página demo
-
-**Costo**: $0 (AWS Free Tier - primeros 12 meses)
+- **Web Servers**: Apache con páginas demo personalizadas
+- **Módulos**: Componentes reutilizables para web-server y security-group
 
 ## 🔄 CI/CD (Opcional)
 
@@ -53,10 +53,18 @@ Para deploy automático con GitHub Actions:
 
 ```
 environments/dev/
-├── main.tf           # Recursos AWS
+├── main.tf           # Configuración base
+├── instances.tf      # Instancias EC2 con módulos
+├── networking.tf     # Security Groups
 ├── variables.tf      # Variables
 ├── outputs.tf        # IPs, URLs
-└── versions.tf       # Providers
+├── versions.tf       # Providers
+├── user-data-*.sh    # Scripts de configuración
+└── terraform.tfvars  # Valores de variables
+
+modules/
+├── web-server/       # Módulo instancias EC2
+└── security-group/   # Módulo firewall
 ```
 
 ## 🔒 Seguridad
@@ -69,7 +77,7 @@ environments/dev/
 
 - **Siempre ejecutar** `terraform destroy` al terminar
 - **Monitorear** AWS Free Tier usage
-- **Solo para aprendizaje** - no producción
+- **Entorno de desarrollo** - evaluar para producción
 
 ---
-**🎯 Objetivo**: Aprender Terraform e IaC sin complejidad innecesaria
+**🎯 Objetivo**: Demostrar Terraform e IaC con implementación práctica
