@@ -18,7 +18,7 @@ output "primary_web_url" {
   value       = module.primary_server.web_url
 }
 
-# Secondary Server Outputs (agregado en commit 2)
+# Secondary Server Outputs
 output "secondary_instance_id" {
   description = "ID of the secondary EC2 instance"
   value       = module.secondary_server.instance_id
