@@ -47,7 +47,7 @@ cat > /var/www/html/index.html << 'HTML'
         <div class="success">✅ Infraestructura desplegada correctamente</div>
         <div class="primary">🔵 SERVIDOR PRINCIPAL</div>
         
-        <h3>📊 Información de la Instancia:</h3>
+        <h3>📊 Información de la Instancia: </h3>
         <div class="info-item"><strong>Instance ID:</strong> INSTANCE_ID_PLACEHOLDER</div>
         <div class="info-item"><strong>Instance Type:</strong> INSTANCE_TYPE_PLACEHOLDER</div>
         <div class="info-item"><strong>Región:</strong> REGION_PLACEHOLDER</div>

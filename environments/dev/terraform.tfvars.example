@@ -10,13 +10,10 @@
 # AWS Configuration
 aws_region    = "us-east-1"
 instance_type = "t2.micro"
-environment   = "dev"
+environment   = "dev" 
 
 # Optional: Specify a custom AMI ID
 # ami_id = "ami-0c02fb55956c7d316"
-
-# Optional: Specify your key pair name for SSH access
-# key_name = "your-key-pair-name"
 
 # =============================================================================
 # NOTAS DE SEGURIDAD:
